@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1F3A">
+<meta name="description" content="누르고 떼면 퍼팅! 30초 동안 나만의 홀인 기록에 도전하세요. ScoreLabs 퍼팅 챌린지.">
+<title>30초 퍼팅 챌린지 | ScoreLabs</title>
+<style>
+:root{color-scheme:light;--navy:#0b1f3a;--teal:#00a38c;--muted:#64748b;--pale:#e3f5f1}
+*{box-sizing:border-box}body{margin:0;background:#edf2f5;color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #e4a93d;outline-offset:4px}[hidden]{display:none!important}
+.app{max-width:480px;margin:auto;padding:24px 20px max(24px,env(safe-area-inset-bottom))}.brand{font-size:13px;font-weight:800;letter-spacing:2px;color:#007d6b}.eyebrow{font-size:12px;letter-spacing:1px;color:var(--muted);margin-top:24px}h1{font-size:clamp(28px,8vw,38px);letter-spacing:-1.6px;line-height:1.18;margin:8px 0 10px}.intro{font-size:14px;color:var(--muted);line-height:1.6;margin:0 0 20px}.hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}.metric{background:white;border-radius:14px;padding:12px}.metric span{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.metric strong{font-size:25px;font-variant-numeric:tabular-nums}.metric small{font-size:12px;margin-left:3px}.urgent{color:#b83b37}
+.course{position:relative;background:#c9e8dc;border:1px solid #bad9cd;border-radius:24px;overflow:hidden}.course svg{width:100%;height:clamp(240px,39vh,330px);display:block}.distance{position:absolute;top:16px;left:18px;font-size:12px;color:#205c50}.distance strong{display:block;font-size:22px;margin-top:2px}.badge{position:absolute;right:16px;top:16px;font-size:11px;padding:6px 9px;border-radius:20px;background:#ffffffa8;color:#296454}.caption{height:42px;margin:0;display:grid;place-items:center;background:#ffffff66;font-size:14px;font-weight:700;padding:0 8px;text-align:center}
+.power{background:white;padding:16px;border-radius:16px;margin-top:12px}.power-label{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:10px}.track{height:14px;border-radius:20px;background:#e5ebef;position:relative;overflow:hidden}.fill{height:100%;width:0;background:var(--teal);border-radius:20px}.target{position:absolute;top:0;height:100%;width:8%;background:#0b1f3a38;border-left:2px solid var(--navy);border-right:2px solid var(--navy)}.legend{font-size:11px;color:var(--muted);margin:9px 0 0}.primary{width:100%;min-height:58px;border:0;border-radius:15px;background:var(--navy);color:white;font-weight:800;font-size:17px;margin-top:14px;touch-action:none;user-select:none;-webkit-user-select:none}.primary:active{background:#174266}.primary:disabled{opacity:.55;cursor:default}.help{font-size:12px;line-height:1.6;color:var(--muted);text-align:center;margin:12px 0}.foot{font-size:11px;color:var(--muted);text-align:center;margin-top:20px}
+.result{background:white;border-radius:24px;padding:28px 22px;text-align:center;margin-top:24px;box-shadow:0 12px 40px #0b1f3a09}.result h2{font-size:23px;margin:0 0 20px}.result-score{font-size:76px;font-weight:850;letter-spacing:-4px;line-height:1}.result-score small{font-size:18px;letter-spacing:0;margin-left:6px}.best-line{font-size:15px;margin:20px 0 6px}.summary{font-size:13px;color:var(--muted);line-height:1.6}.stat{font-size:14px;line-height:1.6;background:var(--pale);padding:16px;border-radius:12px;margin-top:22px}.return{display:inline-block;color:#007d6b;font-size:14px;font-weight:700;margin-top:16px}.result .brand{margin-top:24px}.storage{font-size:11px;color:var(--muted);line-height:1.5}.how{display:flex;gap:12px;align-items:center;padding:12px 0;font-size:12px;color:var(--muted)}.how b{color:var(--navy)}
+.course svg{height:clamp(210px,31vh,270px)}
+@media(max-height:740px){.app{padding-top:16px}.eyebrow{margin-top:12px}h1{font-size:28px}.course svg{height:190px}.intro{margin-bottom:12px;font-size:12px}.metric{padding:9px 12px}.help{margin:8px 0}.power{padding:12px}.primary{min-height:52px}.caption{height:36px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header><div class="brand">ScoreLabs</div><div class="eyebrow">ON THE GREEN · MINI GAME 01</div><h1>30초 퍼팅<br>챌린지</h1><p class="intro">누르고, 거리 보고, 톡.<br>30초 동안 몇 번이나 홀에 넣을 수 있을까요?</p></header>
+  <section id="game" aria-label="퍼팅 게임">
+    <div class="hud"><div class="metric"><span>남은 시간</span><strong id="time">30</strong><small>초</small></div><div class="metric"><span>홀인</span><strong id="score">0</strong><small>개</small></div><div class="metric"><span>내 최고</span><strong id="best">0</strong><small>개</small></div></div>
+    <div class="course">
+      <div class="distance">홀까지<strong id="distance">— m</strong></div><span class="badge">FLAT GREEN</span>
+      <svg viewBox="0 0 400 330" role="img" aria-label="공에서 홀까지 일직선인 평평한 퍼팅 그린">
+        <defs><pattern id="stripes" width="400" height="80" patternUnits="userSpaceOnUse"><rect width="400" height="40" fill="#ffffff" opacity=".09"/></pattern></defs>
+        <rect width="400" height="330" fill="url(#stripes)"/>
+        <ellipse cx="200" cy="165" rx="128" ry="145" fill="#a8d8c3" opacity=".5"/>
+        <path id="aim" d="M200 285V100" stroke="#3a7b66" stroke-width="2" stroke-dasharray="4 8" opacity=".3"/>
+        <g id="hole"><ellipse cx="200" cy="100" rx="11" ry="6" fill="#163f34"/><path d="M200 100V58" stroke="#fff" stroke-width="3"/><path d="M201 58L227 65L201 73Z" fill="#0b1f3a"/></g>
+        <circle id="shadow" cx="201" cy="288" r="7" fill="#568e76" opacity=".35"/>
+        <circle id="ball" cx="200" cy="285" r="7" fill="white" stroke="#d2e1da" stroke-width="1.5"/>
+        <path id="putter" d="M177 303H222M215 303L244 329" stroke="#0b1f3a" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <p id="message" class="caption" role="status">준비되셨나요? 내 기록에 도전해 보세요.</p>
+    </div>
+    <div class="power"><div class="power-label"><span>퍼팅 세기</span><span id="powerValue">0%</span></div><div class="track" role="meter" aria-label="퍼팅 세기" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter"><div class="fill" id="fill"></div><div class="target" id="target" hidden></div></div><p class="legend">진한 구간에 맞춰 떼면 홀인! 거리가 바뀌면 구간도 달라져요.</p></div>
+    <button id="start" class="primary">30초 도전 시작</button>
+    <button id="putt" class="primary" hidden disabled>꾹 누르고 → 떼서 퍼팅</button>
+    <p class="help">터치·마우스로 버튼을 길게 누르세요.<br>키보드는 버튼에 초점을 두고 스페이스를 눌렀다 떼세요.</p>
+  </section>
+  <section id="result" class="result" aria-labelledby="resultTitle" hidden>
+    <h2 id="resultTitle" tabindex="-1">30초, 나의 퍼팅 기록</h2><div class="result-score"><span id="finalScore">0</span><small>홀인</small></div>
+    <p class="best-line">내 최고 기록 <strong id="finalBest">0</strong>개</p><p id="summary" class="summary"></p><p id="storageNote" class="storage"></p>
+    <button id="retry" class="primary">다시 도전</button><p id="tourStat" class="stat" hidden></p>
+    <div class="brand">ScoreLabs</div><a id="blogLink" class="return" hidden>블로그로 돌아가기 ↗</a>
+  </section>
+  <footer class="foot">재미로 즐기는 퍼팅 게임 · 실제 골프 기록과 무관합니다.</footer>
+</main>
+<script>
+(() => {
+  'use strict';
+  // 게시 전 설정: 빈 값은 화면에서 숨기고, 외부 요청도 보내지 않습니다.
+  const BLOG_URL = 'https://blog.naver.com/ejdatalab';
+  const TOUR_STAT = '';
+  const GOATCOUNTER_URL = ''; // 예: https://계정명.goatcounter.com/count
+  const STORAGE_KEY = 'scorelabs-putting-best-v1';
+  const $ = id => document.getElementById(id);
+  const DURATION = 30000, CHARGE_MS = 1600, MAX_METERS = 8, TOLERANCE = .32;
+  let best = 0, storageOK = true;
+  try { const n = Number(localStorage.getItem(STORAGE_KEY)); if (Number.isSafeInteger(n) && n >= 0) best = n; } catch { storageOK = false; }
+  $('best').textContent = best;
+  let phase = 'idle', score = 0, shots = 0, deadline = 0, chargingAt = null, power = 0;
+  let distance = 4, holeY = 145, ballY = 285, shot = null, nextAt = 0, pointer = null;
+  function trackEvent(name) {
+    // 계정 연결 전에는 아무 정보도 전송하지 않습니다. 이벤트는 식별자 없이 집계합니다.
+    if (GOATCOUNTER_URL && window.goatcounter && typeof window.goatcounter.count === 'function') {
+      window.goatcounter.count({path: name, title: name, event: true});
+    }
+  }
+  function setPower(value) {
+    power = value; const percent = Math.round(value * 100);
+    $('fill').style.width = (value * 100) + '%'; $('powerValue').textContent = percent + '%';
+    $('meter').setAttribute('aria-valuenow', percent);
+  }
+  function newShot() {
+    distance = (20 + Math.floor(Math.random() * 46)) / 10;
+    holeY = 285 - distance * 31;
+    $('hole').setAttribute('transform', 'translate(0 ' + (holeY - 100) + ')');
+    $('aim').setAttribute('d', 'M200 285V' + holeY);
+    $('distance').textContent = distance.toFixed(1) + ' m';
+    $('target').hidden = false;
+    $('target').style.left = ((distance - TOLERANCE) / MAX_METERS * 100) + '%';
+    $('target').style.width = (2 * TOLERANCE / MAX_METERS * 100) + '%';
+    ballY = 285; $('ball').setAttribute('r', 7); setPower(0);
+    $('putter').style.visibility = 'visible';
+    $('message').textContent = '진한 구간에 맞춰 손을 떼세요.';
+    phase = 'ready'; $('putt').disabled = false;
+  }
+  function finish() {
+    if (phase === 'ended') return;
+    phase = 'ended'; chargingAt = null; shot = null; pointer = null; $('putt').disabled = true;
+    if (score > best) {
+      best = score;
+      try { localStorage.setItem(STORAGE_KEY, String(best)); } catch { storageOK = false; }
+    }
+    $('time').textContent = '0'; $('best').textContent = best;
+    $('finalScore').textContent = score; $('finalBest').textContent = best;
+    $('summary').textContent = shots + '번의 퍼팅 · ' + (score ? '좋은 거리감이에요. 한 번 더 도전해 보세요.' : '다음 판에는 진한 구간에서 손을 떼보세요.');
+    $('storageNote').textContent = storageOK ? '최고 기록은 이 브라우저에만 저장됩니다.' : '이 브라우저에서는 기록 저장을 사용할 수 없습니다. 새로고침하면 기록이 사라질 수 있어요.';
+    $('game').hidden = true; $('result').hidden = false; $('resultTitle').focus();
+    trackEvent('putting-complete');
+  }
+  function start(retry) {
+    score = 0; shots = 0; chargingAt = null; shot = null; pointer = null;
+    $('score').textContent = '0'; $('time').textContent = '30'; $('time').classList.remove('urgent');
+    $('result').hidden = true; $('game').hidden = false; $('start').hidden = true; $('putt').hidden = false;
+    deadline = performance.now() + DURATION; newShot(); $('putt').focus();
+    trackEvent(retry ? 'putting-retry' : 'putting-start');
+  }
+  function begin() {
+    const now = performance.now();
+    if (now >= deadline && phase !== 'idle') { finish(); return; }
+    if (phase !== 'ready' || chargingAt !== null) return;
+    chargingAt = now;
+    $('message').textContent = '진한 구간에서 떼세요!';
+  }
+  function release() {
+    if (chargingAt === null || phase !== 'ready') return;
+    const now = performance.now();
+    if (now >= deadline) { finish(); return; }
+    setPower(Math.min(1, (now - chargingAt) / CHARGE_MS)); chargingAt = null;
+    shots++; const meters = power * MAX_METERS, success = Math.abs(meters - distance) <= TOLERANCE;
+    shot = {start: now, duration: 650 + power * 300, end: 285 - (success ? distance : meters) * 31, success};
+    phase = 'rolling'; $('putt').disabled = true; $('putter').style.visibility = 'hidden';
+    $('message').textContent = '공이 굴러갑니다…';
+  }
+  $('start').addEventListener('click', () => start(false)); $('retry').addEventListener('click', () => start(true));
+  $('putt').addEventListener('pointerdown', e => {
+    if (!e.isPrimary || e.button !== 0 || phase !== 'ready' || chargingAt !== null) return;
+    e.preventDefault(); pointer = e.pointerId; $('putt').setPointerCapture(pointer); begin();
+  });
+  $('putt').addEventListener('pointerup', e => { if (e.pointerId === pointer) { pointer = null; release(); } });
+  function cancelCharge() { chargingAt = null; pointer = null; if (phase === 'ready') { setPower(0); $('message').textContent = '다시 누르고 떼서 퍼팅하세요.'; } }
+  $('putt').addEventListener('pointercancel', cancelCharge);
+  $('putt').addEventListener('lostpointercapture', () => { if (pointer !== null) cancelCharge(); });
+  $('putt').addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); if (!e.repeat) begin(); } });
+  $('putt').addEventListener('keyup', e => { if (e.code === 'Space') { e.preventDefault(); release(); } });
+  window.addEventListener('blur', cancelCharge);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) cancelCharge(); });
+  function frame(now) {
+    if (phase !== 'idle' && phase !== 'ended') {
+      if (now >= deadline) finish();
+      else {
+        const seconds = Math.ceil((deadline - now) / 1000); $('time').textContent = seconds; $('time').classList.toggle('urgent', seconds <= 5);
+        if (chargingAt !== null) setPower(Math.min(1, (now - chargingAt) / CHARGE_MS));
+        if (phase === 'rolling') {
+          const t = Math.min(1, (now - shot.start) / shot.duration);
+          ballY = 285 + (shot.end - 285) * (1 - Math.pow(1 - t, 3));
+          if (t === 1) {
+            if (shot.success) { score++; $('score').textContent = score; $('ball').setAttribute('r', 0); $('message').textContent = '홀인! +1'; }
+            else $('message').textContent = shot.end < holeY ? '너무 셌어요! 조금 부드럽게.' : '조금 짧아요! 힘을 더 주세요.';
+            phase = 'feedback'; nextAt = now + 480;
+          }
+        } else if (phase === 'feedback' && now >= nextAt) newShot();
+      }
+    }
+    $('ball').setAttribute('cy', ballY); $('shadow').setAttribute('cy', ballY + 3); $('shadow').style.visibility = $('ball').getAttribute('r') === '0' ? 'hidden' : 'visible';
+    requestAnimationFrame(frame);
+  }
+  if (TOUR_STAT.trim()) { $('tourStat').textContent = TOUR_STAT; $('tourStat').hidden = false; }
+  if (BLOG_URL.trim()) { try { const url = new URL(BLOG_URL); if (url.protocol === 'https:' || url.protocol === 'http:') { $('blogLink').href = url.href; $('blogLink').hidden = false; } } catch {} }
+  // 카운터 활성화 시 아래 스크립트 주석을 해제하고 data-goatcounter를 GOATCOUNTER_URL과 동일하게 설정합니다.
+  // 게임 완료·재도전 집계용 이름: putting-start, putting-complete, putting-retry.
+  requestAnimationFrame(frame);
+})();
+</script>
+<!-- 방문 카운터: 계정 준비 후에만 활성화 (현재 외부 연결 없음)
+<script data-goatcounter="https://YOUR-CODE.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+-->
+</body>
+</html>
